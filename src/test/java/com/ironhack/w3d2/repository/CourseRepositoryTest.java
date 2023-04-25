@@ -62,4 +62,16 @@ class CourseRepositoryTest {
         List<Course> courseList = courseRepository.findAllByClassroom("B1");
         assertEquals(2, courseList.size());
     }
+
+    @Test
+    public void findAllByCourseContainig_presentString_courseList() {
+        List<Course> courseList = courseRepository.findAllByCourseContaining("p");
+        assertEquals(3, courseList.size());
+    }
+
+    @Test
+    public void findAllByHoursLessThan_validHours_courseList() {
+        List<Course> courseList = courseRepository.findAllByHoursLessThan(150);
+        assertEquals(3, courseList.size());
+    }
 }

@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface CourseRepository extends JpaRepository<Course, String> {
     Optional<Course> findByHours(Integer hours);    //* create a new method
     List<Course> findAllByClassroom(String classroom);
+    List<Course> findAllByCourseContaining(String str);
+    List<Course> findAllByHoursLessThan(Integer hours);
 }
