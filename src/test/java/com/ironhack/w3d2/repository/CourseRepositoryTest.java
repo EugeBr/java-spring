@@ -1,7 +1,6 @@
 package com.ironhack.w3d2.repository;
 
 import com.ironhack.w3d2.model.Course;
-import com.ironhack.w3d2.model.Teacher;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,21 +19,25 @@ class CourseRepositoryTest {
     CourseRepository courseRepository;
 
 //*    examples
-//    @BeforeEach
-//    public void setUp() {
-//        Course algebra = new Course("Algebra", 150, "B1", "2 weeks", 1);
-//        courseRepository.save(algebra);  //* new course added
-//    }
-//
-//    @AfterEach
-//    public void tearDown() {
-//        courseRepository.deleteById("Algebra");
-//    }
+    @BeforeEach
+    public void setUp() {
+        Course algebra = new Course("Algebra", 150, "B1", "2 weeks", 1);
+        courseRepository.save(algebra);  //* new course added
+    }
+
+    @AfterEach
+    public void tearDown() {
+        courseRepository.deleteById("Algebra");
+    }
+
+//    ******************************************************************************
+//    ************************************* JPA ************************************
+//    ******************************************************************************
 
     @Test
     public void findAll_courses_courseList() {
         List<Course> courseList = courseRepository.findAll();
-        assertEquals(6, courseList.size());
+        assertEquals(7, courseList.size());
     }
 
     @Test
@@ -60,11 +63,11 @@ class CourseRepositoryTest {
     @Test
     public void findAllByClassroom_validClassroom_courseList() {
         List<Course> courseList = courseRepository.findAllByClassroom("B1");
-        assertEquals(2, courseList.size());
+        assertEquals(3, courseList.size());
     }
 
     @Test
-    public void findAllByCourseContainig_presentString_courseList() {
+    public void findAllByCourseContaining_presentString_courseList() {
         List<Course> courseList = courseRepository.findAllByCourseContaining("p");
         assertEquals(3, courseList.size());
     }
@@ -74,4 +77,78 @@ class CourseRepositoryTest {
         List<Course> courseList = courseRepository.findAllByHoursLessThan(150);
         assertEquals(3, courseList.size());
     }
+
+//    *****************************************************************************
+//    ******************************* JPQL ****************************************
+//    *****************************************************************************
+
+    @Test
+    public void findAllWhereHours150__courseList() {
+        List<Course> courseList = courseRepository.findAllWhereHours150();
+        System.out.println(courseList);
+        assertEquals(3, courseList.size());
+    }
+
+    @Test
+    public void findAllWhereHours150JustCourseAndHours__courseList() {
+        List<Object[]> courseList = courseRepository.findAllWhereHours150JustCourseAndHours();
+        for (Object[] elem : courseList) {
+            for  (Object data : elem) {
+                System.out.print(data + " ");
+            }
+            System.out.println();
+        }
+        assertEquals(3, courseList.size());
+    }
+
+    @Test
+    public void findHourSum__hoursSum() {
+        Integer hoursSum = courseRepository.findHoursSum();
+        System.out.println(hoursSum);
+        assertEquals(960, hoursSum);
+    }
+
+    @Test
+    public void findAllWhereClassroomB1__courseList() {
+        List<Course> courseList = courseRepository.findAllWhereClassroomB1();
+        System.out.println(courseList);
+        assertEquals(3, courseList.size());
+    }
+
+    @Test
+    public void findAllWhereContainingAlgebra__courseList() {
+        List<Course> courseList = courseRepository.findAllWhereContainingAlgebra();
+        System.out.println(courseList);
+        assertEquals(1, courseList.size());
+    }
+
+    @Test
+    public void findAllWhereHoursLessThan200__courseList() {
+        List<Course> courseList = courseRepository.findAllWhereHoursLessThan200();
+        System.out.println(courseList);
+        assertEquals(6, courseList.size());
+    }
+
+    @Test
+    public void findAllWhereClassroomAndHoursParams_validParams_correctCourses() {
+        List<Course> courseList = courseRepository.findAllWhereClassroomAndHoursParams("B1", 160);
+        System.out.println(courseList);
+        assertEquals(3, courseList.size());
+    }
+
+    @Test
+    void findAllWhereClassroomAndHoursNamedParams_validParams_correctCourses() {
+        List<Course> courseList = courseRepository.findAllWhereClassroomAndHoursNamedParams("B1", 160);
+        System.out.println(courseList);
+        assertEquals(3, courseList.size());
+    }
+
+    @Test
+    void findAllWhereContainingStrParam_validParam_correctCourses() {
+        List<Course> courseList = courseRepository.findAllWhereContainingStrParam("Algebra");
+        System.out.println(courseList);
+        assertEquals(1, courseList.size());
+    }
+
+
 }

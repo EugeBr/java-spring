@@ -67,4 +67,15 @@ public class Course {
     public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "course='" + course + '\'' +
+                ", hours=" + hours +
+                ", classroom='" + classroom + '\'' +
+                ", vacations='" + vacations + '\'' +
+                ", teacherId=" + teacherId +
+                '}';
+    }
 }
