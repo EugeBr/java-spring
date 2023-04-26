@@ -54,4 +54,12 @@ public interface CourseRepository extends JpaRepository<Course, String> {
     List<Course> findAllWhereContainingStrParam(
             @Param("strParam") String str
     );
+
+//    NATIVE SQL
+
+//*   Same as JPQL but using same queries than SQL
+
+    @Query(value = "SELECT * FROM course c WHERE c.hours = 150",
+            nativeQuery = true)
+    List<Course> nativeFindAllWhereHours150();
 }

@@ -150,5 +150,14 @@ class CourseRepositoryTest {
         assertEquals(1, courseList.size());
     }
 
+//    ***********************************************************************************
+//    ******************************* NATIVE SQL ****************************************
+//    ***********************************************************************************
 
+    @Test
+    public void nativeFindAllWhereHours150__courseList() {
+        List<Course> courseList = courseRepository.nativeFindAllWhereHours150();
+        System.out.println(courseList);
+        assertEquals(3, courseList.size());
+    }
 }
