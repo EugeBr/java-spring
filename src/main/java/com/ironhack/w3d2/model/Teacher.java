@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity                      //* entities 'transform' sql tables to java classes
 //@Table(name="teacher")     // only if the name of table is different in sql script
 public class Teacher {
+
     @Id                     //* to assign primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(name = "id")    //only if the name of property is different in sql script
@@ -13,9 +14,17 @@ public class Teacher {
 //    @Column(name = "teacher")
     private String teacher;
 
-//  !! IMPORTANT
-//  Spring NEEDS an empty constructor
+    @OneToOne               //* establish one-to-one relationship
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+//  !! IMPORTANT        //  Spring NEEDS an empty constructor
     public Teacher() {
+    }
+
+    public Teacher(String teacher, Address address) {
+        this.teacher = teacher;
+        this.address = address;
     }
 
     public Integer getId() {
@@ -34,12 +43,21 @@ public class Teacher {
         this.teacher = teacher;
     }
 
-    //not mandatory, just useful for testing
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+//  not mandatory, but useful for testing
     @Override
     public String toString() {
         return "Teacher{" +
                 "id=" + id +
                 ", teacher='" + teacher + '\'' +
+                ", address=" + address +
                 '}';
     }
 }
