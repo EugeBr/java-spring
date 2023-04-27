@@ -18,6 +18,9 @@ public class Teacher {
     @JoinColumn(name = "address_id")
     private Address address;
 
+//    @OneToMany(mappedBy = "teacher")      // bidirectional relationship (triggers infinite loop)
+//    private List<Course>
+
 //  !! IMPORTANT        //  Spring NEEDS an empty constructor
     public Teacher() {
     }
