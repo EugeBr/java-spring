@@ -1,8 +1,6 @@
 package com.ironhack.w3d2.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Course {
@@ -12,20 +10,21 @@ public class Course {
     private String classroom;
     private String vacations;
 
-//  @Column(name = "teacher_id")    // not necessary (snake_case translates to camelCase)
-    private Integer teacherId;
+    @ManyToOne                          //* because many courses could be given by one teacher
+    @JoinColumn(name = "teacher_id")    //* reference from db
+    private Teacher teacher;
 
 //! necessary for spring
     public Course() {
     }
 
 //* not necessary, but we need it if we want to create objects manually
-    public Course(String course, Integer hours, String classroom, String vacations, Integer teacherId) {
+    public Course(String course, Integer hours, String classroom, String vacations, Teacher teacher) {
         this.course = course;
         this.hours = hours;
         this.classroom = classroom;
         this.vacations = vacations;
-        this.teacherId = teacherId;
+        this.teacher = teacher;
     }
 
     public String getCourse() {
@@ -60,12 +59,12 @@ public class Course {
         this.vacations = vacations;
     }
 
-    public Integer getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(Integer teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     @Override
@@ -75,7 +74,7 @@ public class Course {
                 ", hours=" + hours +
                 ", classroom='" + classroom + '\'' +
                 ", vacations='" + vacations + '\'' +
-                ", teacherId=" + teacherId +
+                ", teacher=" + teacher +
                 '}';
     }
 }

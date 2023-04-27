@@ -1,9 +1,6 @@
 package com.ironhack.w3d2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Address {
@@ -12,6 +9,10 @@ public class Address {
     private Integer id;
     private String street;
     private String houseCode;
+
+//    ! Not recommended, could trigger infinite loop
+//    @OneToOne(mappedBy = "address")
+//    private Teacher teacher;
 
     public Address() {
     }
