@@ -19,7 +19,8 @@ public class Teacher {
     private Address address;
 
 //    @OneToMany(mappedBy = "teacher")      // bidirectional relationship (triggers infinite loop)
-//    private List<Course>
+//    @ToString.Exclude
+//    private List<Course> courses;
 
 //  !! IMPORTANT        //  Spring NEEDS an empty constructor
     public Teacher() {
