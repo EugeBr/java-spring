@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate      //* more efficient but not mandatory
 public class Course {
     @Id
     private String course;

@@ -1,5 +1,7 @@
 package com.ironhack.w3d2.controller.impl;
 
+import com.ironhack.w3d2.controller.dto.CourseClassroomDTO;
+import com.ironhack.w3d2.controller.dto.CourseHoursDTO;
 import com.ironhack.w3d2.controller.interfaces.ICourseController;
 import com.ironhack.w3d2.model.Course;
 import com.ironhack.w3d2.repository.CourseRepository;
@@ -59,10 +61,34 @@ public class CourseController implements ICourseController {
         courseRepository.save(course);
     }
 
-
-
 //  *********************************************** PUT ************************************************************
-//  *********************************************** PATCH **********************************************************
-//  *********************************************** GET ************************************************************
+//* to change whole object for a new object
 
+    @PutMapping("/courses/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateCourse(@RequestBody @Valid Course course, @PathVariable String id) {
+        courseService.updateCourse(course, id);
+    }
+
+//  *********************************************** PATCH **********************************************************
+//* to change only one field
+
+    @PatchMapping("/courses/hours/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateCourseHours(@RequestBody @Valid CourseHoursDTO courseHoursDTO, @PathVariable String id) {
+        courseService.updateCourseHours(courseHoursDTO.getHours(), id);
+    }
+
+    @PatchMapping("/courses/classroom/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateCourseClassroom(@RequestBody @Valid CourseClassroomDTO courseClassroomDTO, @PathVariable String id) {
+        courseService.updateCourseClassroom(courseClassroomDTO.getClassroom(), id);
+    }
+//  *********************************************** DELETE *********************************************************
+
+    @DeleteMapping("/courses/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCourse(@PathVariable String id) {
+        courseService.deleteCourse(id);
+    }
 }
