@@ -1,12 +1,18 @@
 package com.ironhack.w3d2.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Course {
     @Id
     private String course;
+    @Max(value = 400, message = "The course can't be longer than 400 hour")
+    @Min(50)
     private Integer hours;
+    @NotEmpty(message = "Classroom can't be empty")
     private String classroom;
     private String vacations;
 

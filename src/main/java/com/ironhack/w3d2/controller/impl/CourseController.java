@@ -1,7 +1,10 @@
 package com.ironhack.w3d2.controller.impl;
 
+import com.ironhack.w3d2.controller.interfaces.ICourseController;
 import com.ironhack.w3d2.model.Course;
 import com.ironhack.w3d2.repository.CourseRepository;
+import com.ironhack.w3d2.service.interfaces.ICourseService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +14,15 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class CourseController {
+public class CourseController implements ICourseController {
 
     @Autowired
     CourseRepository courseRepository;
+
+    @Autowired
+    ICourseService courseService;   //* to get all methods from service
+
+//  *********************************************** GET **********************************************************
 
     @GetMapping("/courses")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -24,9 +32,7 @@ public class CourseController {
 
     @GetMapping("/courses/{course}")
     public Course getCourseById(@PathVariable(name = "course") String course) {     //* @PathVariable(name = "course") if the names are different
-        Optional<Course> courseOptional = courseRepository.findById(course);
-        if(courseOptional.isEmpty()) return null;
-        return courseOptional.get();
+        return courseService.getCourseById(course);
     }
 
 //      QUERY PARAMS PETITION
@@ -42,8 +48,21 @@ public class CourseController {
             @RequestParam(defaultValue = "A1") String classroom,
             @RequestParam Optional<Integer> hours       //* if I want only one mandatory param
     ) {
-        if (hours.isPresent()) return courseRepository.findAllByClassroomAndHours(classroom, hours.get());
-        return courseRepository.findAllByClassroom(classroom);
+        return courseService.getCourseByClassroomAndHours(classroom, hours);
     }
+
+//  *********************************************** POST **********************************************************
+
+    @PostMapping("/courses")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveCourse(@RequestBody @Valid Course course) {
+        courseRepository.save(course);
+    }
+
+
+
+//  *********************************************** PUT ************************************************************
+//  *********************************************** PATCH **********************************************************
+//  *********************************************** GET ************************************************************
 
 }
