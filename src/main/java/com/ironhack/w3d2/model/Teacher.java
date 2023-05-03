@@ -14,7 +14,7 @@ public class Teacher {
 //    @Column(name = "teacher")
     private String teacher;
 
-    @OneToOne               //* establish one-to-one relationship
+    @OneToOne(cascade = CascadeType.ALL)               //* establish one-to-one relationship
     @JoinColumn(name = "address_id")
     private Address address;
 

@@ -18,7 +18,7 @@ public class Course {
     private String classroom;
     private String vacations;
 
-    @ManyToOne                          //* because many courses could be given by one teacher
+    @ManyToOne(cascade = CascadeType.ALL)                          //* because many courses could be given by one teacher
     @JoinColumn(name = "teacher_id")    //* reference from db
     private Teacher teacher;
 
